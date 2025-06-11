@@ -4,12 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Game Kuis Interaktif</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
       background: url('https://cdn.pixabay.com/photo/2017/08/30/07/52/galaxy-2695569_1280.jpg') no-repeat center center fixed;
@@ -29,19 +25,18 @@
     main.container {
       padding: 2rem;
       max-width: 600px;
-      margin: 2rem auto;
+      margin: auto;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      margin-top: 2rem;
     }
 
     input[type="text"] {
-      padding: 0.7rem;
+      padding: 0.5rem;
       width: 80%;
       margin-bottom: 1rem;
       font-size: 1rem;
-      border-radius: 6px;
-      border: none;
     }
 
     button {
@@ -49,18 +44,16 @@
       font-size: 1rem;
       margin: 0.5rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       background-color: #00bcd4;
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-weight: 600;
     }
 
     button:hover {
       background-color: #0097a7;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(0, 188, 212, 0.4);
+      transform: scale(1.05);
     }
 
     .question {
@@ -75,32 +68,17 @@
       margin: 0.5rem 0;
       background-color: #eceff1;
       color: #000;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 0.7rem 1rem;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    #options button:hover {
-      background-color: #d9e1e8;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-    }
-
-    .correct {
+    #options button.correct {
       background-color: #4caf50 !important;
       color: #fff !important;
-      transform: scale(1.03);
-      box-shadow: 0 0 15px #4caf50;
     }
 
-    .wrong {
+    #options button.wrong {
       background-color: #f44336 !important;
       color: #fff !important;
-      transform: scale(1.03);
-      box-shadow: 0 0 15px #f44336;
     }
 
     #progress {
@@ -132,46 +110,68 @@
       padding-left: 0;
       list-style-position: inside;
       text-align: left;
+      color: #fff;
     }
 
     @media (max-width: 600px) {
       main.container {
+        padding: 1rem;
         margin: 1rem;
-        padding: 1.5rem;
+      }
+
+      input[type="text"] {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Game Kuis Interaktif</h1>
-  </header>
-  <main class="container">
-    <section id="playerName">
-      <input type="text" id="nameInput" placeholder="Masukkan nama Anda" />
-      <button id="startBtn">Mulai</button>
-    </section>
+  <div id="app">
+    <header>
+      <h1>Game Kuis Interaktif</h1>
+    </header>
+    <main class="container">
+      <section id="playerName">
+        <input type="text" id="nameInput" placeholder="Masukkan nama Anda" />
+        <button id="startBtn">Mulai</button>
+      </section>
 
-    <section id="quizContainer" hidden>
-      <div id="timer">Waktu: 30 detik</div>
-      <div id="progress">
-        <div id="progress-bar"></div>
-      </div>
-      <div class="question" id="question"></div>
-      <div id="options"></div>
-      <div id="explanation"></div>
-      <div id="score"></div>
-      <button id="restartBtn" hidden>Ulangi Kuis</button>
-    </section>
+      <section id="quizContainer" hidden>
+        <div id="timer">Waktu: 30 detik</div>
+        <div id="progress"><div id="progress-bar"></div></div>
+        <div class="question" id="question"></div>
+        <div id="options"></div>
+        <div id="explanation"></div>
+        <div id="score"></div>
+        <button id="restartBtn" hidden>Ulangi Kuis</button>
+      </section>
 
-    <section id="highscore" hidden>
-      <h3>🏆 Leaderboard</h3>
-      <ol></ol>
-    </section>
-  </main>
+      <section id="highscore" hidden>
+        <h3>🏆 Leaderboard</h3>
+        <ol></ol>
+      </section>
+    </main>
+  </div>
 
   <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_5be3a144f3.mp3" preload="auto"></audio>
   <audio id="wrongSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_ea7fc8d3f7.mp3" preload="auto"></audio>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDei7FB_MiToI5E1a-TLH0Xbz1wlvdj58I",
+      authDomain: "games-kuis-b9442.firebaseapp.com",
+      projectId: "games-kuis-b9442",
+      storageBucket: "games-kuis-b9442.appspot.com",
+      messagingSenderId: "509019029101",
+      appId: "1:509019029101:web:9ef684d762150d0e8a4964",
+      measurementId: "G-5XD6N7DXED"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
 
   <script>
     const questions = [
@@ -236,10 +236,10 @@
         scoreEl.textContent = `${playerName}, skor akhir Anda: ${score}/${questions.length}`;
         restartBtn.hidden = false;
         updateHighScore(score);
+        quizContainer.hidden = false;
         highscoreEl.hidden = false;
         return;
       }
-
       updateProgress();
       startTimer();
       const q = questions[current];
@@ -301,11 +301,39 @@
       document.getElementById("progress-bar").style.width = progress + "%";
     }
 
-    function updateHighScore(score) {
+    async function updateHighScore(score) {
+      try {
+        await db.collection("leaderboard").add({
+          name: playerName,
+          score: score,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showLeaderboard();
+      } catch (error) {
+        console.error("Gagal menyimpan skor:", error);
+      }
+    }
+
+    async function showLeaderboard() {
       const ol = highscoreEl.querySelector("ol");
-      const li = document.createElement("li");
-      li.textContent = `${playerName}: ${score} poin`;
-      ol.appendChild(li);
+      ol.innerHTML = "";
+
+      try {
+        const snapshot = await db.collection("leaderboard")
+          .orderBy("score", "desc")
+          .orderBy("timestamp", "asc")
+          .limit(10)
+          .get();
+
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement("li");
+          li.textContent = `${data.name}: ${data.score} poin`;
+          ol.appendChild(li);
+        });
+      } catch (error) {
+        console.error("Gagal memuat leaderboard:", error);
+      }
     }
   </script>
 </body>
