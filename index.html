@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Game Kuis Interaktif</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuis Interaktif</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -18,67 +19,64 @@
 
     header {
       background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
       padding: 1rem;
       backdrop-filter: blur(5px);
     }
 
     main.container {
-      padding: 2rem;
-      max-width: 600px;
+      padding: 1.5rem;
+      max-width: 90%;
       margin: auto;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      margin-top: 2rem;
+      margin-top: 1.5rem;
     }
 
     input[type="text"] {
       padding: 0.5rem;
-      width: 80%;
-      margin-bottom: 1rem;
+      width: 90%;
       font-size: 1rem;
+      border-radius: 5px;
+      border: none;
     }
 
     button {
-      padding: 0.7rem 1.2rem;
-      font-size: 1rem;
-      margin: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 0.95rem;
+      margin: 0.5rem 0;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background-color: #00bcd4;
-      color: white;
+      color: #fff;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
+      max-width: 100%;
     }
 
     button:hover {
       background-color: #0097a7;
-      transform: scale(1.05);
     }
 
     .question {
       font-weight: bold;
       margin-bottom: 1rem;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
     }
 
     #options button {
       display: block;
       width: 100%;
-      margin: 0.5rem 0;
+      max-width: 100%;
+      margin: 0.4rem 0;
       background-color: #eceff1;
       color: #000;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      font-size: 1rem;
     }
 
-    #options button.correct {
-      background-color: #4caf50 !important;
-      color: #fff !important;
-    }
-
-    #options button.wrong {
-      background-color: #f44336 !important;
-      color: #fff !important;
+    #options button:hover {
+      background-color: #cfd8dc;
     }
 
     #progress {
@@ -103,238 +101,228 @@
 
     #score {
       margin-top: 1rem;
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     #highscore ol {
       padding-left: 0;
       list-style-position: inside;
       text-align: left;
-      color: #fff;
+      font-size: 0.95rem;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .scale-up {
+      animation: scaleUp 0.5s ease forwards;
+    }
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .pulse {
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    .correct {
+      background-color: #4caf50 !important;
+      color: #fff !important;
+      transition: transform 0.2s ease;
+      transform: scale(1.05);
+    }
+
+    .wrong {
+      animation: shake 0.4s ease;
+      background-color: #f44336 !important;
+      color: #fff !important;
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      25% {
+        transform: translateX(-5px);
+      }
+      50% {
+        transform: translateX(5px);
+      }
+      75% {
+        transform: translateX(-5px);
+      }
     }
 
     @media (max-width: 600px) {
       main.container {
         padding: 1rem;
-        margin: 1rem;
+        margin-top: 1rem;
+      }
+
+      .question {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.6rem;
       }
 
       input[type="text"] {
-        width: 100%;
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
+
 <body>
-  <div id="app">
-    <header>
-      <h1>Game Kuis Interaktif</h1>
-    </header>
-    <main class="container">
-      <section id="playerName">
-        <input type="text" id="nameInput" placeholder="Masukkan nama Anda" />
-        <button id="startBtn">Mulai</button>
-      </section>
-
-      <section id="quizContainer" hidden>
-        <div id="timer">Waktu: 30 detik</div>
-        <div id="progress"><div id="progress-bar"></div></div>
-        <div class="question" id="question"></div>
-        <div id="options"></div>
-        <div id="explanation"></div>
-        <div id="score"></div>
-        <button id="restartBtn" hidden>Ulangi Kuis</button>
-      </section>
-
-      <section id="highscore" hidden>
-        <h3>🏆 Leaderboard</h3>
-        <ol></ol>
-      </section>
-    </main>
-  </div>
-
-  <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_5be3a144f3.mp3" preload="auto"></audio>
-  <audio id="wrongSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_ea7fc8d3f7.mp3" preload="auto"></audio>
-
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyDei7FB_MiToI5E1a-TLH0Xbz1wlvdj58I",
-      authDomain: "games-kuis-b9442.firebaseapp.com",
-      projectId: "games-kuis-b9442",
-      storageBucket: "games-kuis-b9442.appspot.com",
-      messagingSenderId: "509019029101",
-      appId: "1:509019029101:web:9ef684d762150d0e8a4964",
-      measurementId: "G-5XD6N7DXED"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-  </script>
-
+  <header>
+    <h1>Kuis Interaktif</h1>
+  </header>
+  <main class="container">
+    <div id="start-screen">
+      <input type="text" id="username" placeholder="Masukkan nama Anda" required>
+      <button onclick="startQuiz()">Mulai Kuis</button>
+    </div>
+    <div id="quiz-container" style="display: none;">
+      <div id="timer"></div>
+      <div id="progress"><div id="progress-bar"></div></div>
+      <div class="question" id="question-text"></div>
+      <div id="options"></div>
+      <div id="score"></div>
+    </div>
+    <div id="highscore" style="display:none;">
+      <h3>Skor Tertinggi</h3>
+      <ol id="highscore-list"></ol>
+    </div>
+  </main>
   <script>
     const questions = [
-      { question: "5 x 9 = ?", options: ["32", "45", "55", "60"], answer: "45", explanation: "5 x 9 = 45." },
-      { question: "Benda langit yang mengelilingi Bumi?", options: ["Matahari", "Mars", "Bulan", "Venus"], answer: "Bulan", explanation: "Bulan mengelilingi Bumi." },
-      { question: "Warna primer berikut ini adalah?", options: ["Merah", "Ungu", "Hijau", "Coklat"], answer: "Merah", explanation: "Warna primer: Merah, Kuning, Biru." },
-      { question: "Negara dengan piramida terkenal?", options: ["India", "Italia", "Mesir", "Meksiko"], answer: "Mesir", explanation: "Mesir terkenal dengan piramida." },
-      { question: "Hewan berkaki 8?", options: ["Laba-laba", "Kucing", "Ular", "Sapi"], answer: "Laba-laba", explanation: "Laba-laba memiliki 8 kaki." },
-      { question: "Ibukota Jepang?", options: ["Osaka", "Tokyo", "Kyoto", "Hiroshima"], answer: "Tokyo", explanation: "Ibukota Jepang adalah Tokyo." },
-      { question: "Jumlah hari dalam seminggu?", options: ["5", "6", "7", "8"], answer: "7", explanation: "Ada 7 hari dalam seminggu." },
-      { question: "Benda cair di bawah ini?", options: ["Es", "Air", "Batu", "Kayu"], answer: "Air", explanation: "Air adalah zat cair." },
-      { question: "Organ untuk mendengar?", options: ["Mata", "Telinga", "Hidung", "Mulut"], answer: "Telinga", explanation: "Kita mendengar dengan telinga." },
-      { question: "Angka sebelum 10?", options: ["8", "9", "11", "7"], answer: "9", explanation: "Angka sebelum 10 adalah 9." }
+      {
+        question: "Apa ibu kota Indonesia?",
+        options: ["Jakarta", "Bandung", "Surabaya", "Medan"],
+        answer: "Jakarta"
+      },
+      {
+        question: "2 + 2 = ?",
+        options: ["3", "4", "5", "6"],
+        answer: "4"
+      },
+      {
+        question: "Warna bendera Indonesia?",
+        options: ["Merah Putih", "Putih Biru", "Hijau Merah", "Kuning Merah"],
+        answer: "Merah Putih"
+      }
     ];
 
-    let current = 0;
+    let currentQuestion = 0;
     let score = 0;
-    let timer = 30;
-    let timerInterval;
-    let playerName = "";
+    let timer;
+    let timeLeft = 15;
 
-    const nameInput = document.getElementById("nameInput");
-    const startBtn = document.getElementById("startBtn");
-    const questionEl = document.getElementById("question");
-    const optionsEl = document.getElementById("options");
-    const explanationEl = document.getElementById("explanation");
-    const scoreEl = document.getElementById("score");
-    const timerEl = document.getElementById("timer");
-    const quizContainer = document.getElementById("quizContainer");
-    const restartBtn = document.getElementById("restartBtn");
-    const highscoreEl = document.getElementById("highscore");
-    const wrongSound = document.getElementById("wrongSound");
-    const correctSound = document.getElementById("correctSound");
-
-    startBtn.onclick = () => {
-      if (nameInput.value.trim() === "") {
-        alert("Nama tidak boleh kosong.");
+    function startQuiz() {
+      const name = document.getElementById('username').value;
+      if (!name) {
+        alert("Masukkan nama terlebih dahulu!");
         return;
       }
-      playerName = nameInput.value.trim();
-      nameInput.parentElement.hidden = true;
-      quizContainer.hidden = false;
+      document.getElementById('start-screen').style.display = 'none';
+      document.getElementById('quiz-container').style.display = 'block';
       showQuestion();
-    };
-
-    restartBtn.onclick = () => {
-      current = 0;
-      score = 0;
-      timer = 30;
-      quizContainer.hidden = false;
-      restartBtn.hidden = true;
-      highscoreEl.hidden = true;
-      showQuestion();
-    };
+      startTimer();
+    }
 
     function showQuestion() {
-      if (current >= questions.length) {
-        clearInterval(timerInterval);
-        questionEl.textContent = "Kuis Selesai!";
-        optionsEl.innerHTML = "";
-        explanationEl.textContent = "";
-        scoreEl.textContent = `${playerName}, skor akhir Anda: ${score}/${questions.length}`;
-        restartBtn.hidden = false;
-        updateHighScore(score);
-        quizContainer.hidden = false;
-        highscoreEl.hidden = false;
-        return;
-      }
-      updateProgress();
-      startTimer();
-      const q = questions[current];
-      questionEl.textContent = q.question;
-      explanationEl.textContent = "";
-      optionsEl.innerHTML = "";
+      const q = questions[currentQuestion];
+      document.getElementById("question-text").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
       q.options.forEach(opt => {
         const btn = document.createElement("button");
         btn.textContent = opt;
-        btn.onclick = () => {
-          clearInterval(timerInterval);
-          showExplanation(opt, btn);
-        };
-        optionsEl.appendChild(btn);
+        btn.onclick = () => checkAnswer(btn, q.answer);
+        optionsDiv.appendChild(btn);
       });
     }
 
-    function showExplanation(selected, button) {
-      const correct = questions[current].answer;
-      const explanation = questions[current].explanation;
-
-      Array.from(optionsEl.children).forEach(btn => {
-        btn.disabled = true;
-        if (btn.textContent === correct) {
-          btn.classList.add("correct");
-        }
-      });
-
-      if (selected === correct) {
+    function checkAnswer(btn, correct) {
+      const buttons = document.querySelectorAll("#options button");
+      buttons.forEach(b => b.disabled = true);
+      if (btn.textContent === correct) {
+        btn.classList.add("correct");
         score++;
-        explanationEl.innerHTML = `<p style="color:lightgreen;">Benar! ${explanation}</p>`;
-        correctSound.play();
       } else {
-        explanationEl.innerHTML = `<p style="color:red;">Salah. Jawaban benar: ${correct}. ${explanation}</p>`;
-        button.classList.add("wrong");
-        wrongSound.play();
+        btn.classList.add("wrong");
+        buttons.forEach(b => {
+          if (b.textContent === correct) b.classList.add("correct");
+        });
       }
-
-      current++;
-      setTimeout(showQuestion, 2000);
+      document.getElementById("score").textContent = `Skor: ${score}`;
+      clearInterval(timer);
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          timeLeft = 15;
+          showQuestion();
+          startTimer();
+        } else {
+          showHighscore();
+        }
+      }, 1200);
     }
 
     function startTimer() {
-      timer = 30;
-      timerEl.textContent = `Waktu: ${timer} detik`;
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timer--;
-        timerEl.textContent = `Waktu: ${timer} detik`;
-        if (timer <= 0) {
-          clearInterval(timerInterval);
-          showExplanation("", document.createElement("div"));
+      document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
+        document.getElementById("progress-bar").style.width = `${(timeLeft / 15) * 100}%`;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          checkAnswer({ textContent: "" }, questions[currentQuestion].answer);
         }
       }, 1000);
     }
 
-    function updateProgress() {
-      const progress = (current / questions.length) * 100;
-      document.getElementById("progress-bar").style.width = progress + "%";
-    }
-
-    async function updateHighScore(score) {
-      try {
-        await db.collection("leaderboard").add({
-          name: playerName,
-          score: score,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        showLeaderboard();
-      } catch (error) {
-        console.error("Gagal menyimpan skor:", error);
-      }
-    }
-
-    async function showLeaderboard() {
-      const ol = highscoreEl.querySelector("ol");
-      ol.innerHTML = "";
-
-      try {
-        const snapshot = await db.collection("leaderboard")
-          .orderBy("score", "desc")
-          .orderBy("timestamp", "asc")
-          .limit(10)
-          .get();
-
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const li = document.createElement("li");
-          li.textContent = `${data.name}: ${data.score} poin`;
-          ol.appendChild(li);
-        });
-      } catch (error) {
-        console.error("Gagal memuat leaderboard:", error);
-      }
+    function showHighscore() {
+      document.getElementById("quiz-container").style.display = 'none';
+      document.getElementById("highscore").style.display = 'block';
+      const username = document.getElementById("username").value;
+      const entry = `${username} - Skor: ${score}`;
+      const list = document.getElementById("highscore-list");
+      const item = document.createElement("li");
+      item.textContent = entry;
+      list.appendChild(item);
     }
   </script>
 </body>
+
 </html>
