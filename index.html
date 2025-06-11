@@ -303,6 +303,38 @@
           if (b.textContent === correct) b.classList.add("correct");
         });
       }
+  const userAnswers = [];
+  function checkAnswer(btn, correct) {
+  const q = questions[currentQuestion];
+  const userAnswer = btn.textContent || "Waktu habis";
+
+  // Simpan jawaban
+  userAnswers.push({
+    question: q.question,
+    answer: userAnswer,
+    correct: userAnswer === correct
+  });
+
+  // Di akhir kuis panggil:
+  if (currentQuestion >= questions.length) {
+    saveToFirebase();
+  }
+}
+      function saveToFirebase() {
+  const name = document.getElementById("username").value;
+  const payload = {
+    name,
+    score,
+    answers: userAnswers,
+    timestamp: new Date().toISOString()
+  };
+
+  const db = firebase.database(); // atau firebase.firestore() jika pakai Firestore
+  db.ref("responses").push(payload).then(() => {
+    showHighscore();
+  });
+}
+
       document.getElementById("score").textContent = `Skor: ${score}`;
       clearInterval(timer);
       setTimeout(() => {
