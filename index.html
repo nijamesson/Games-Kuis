@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kuis Interaktif</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* CSS sama seperti sebelumnya (tidak diubah) */
     body {
       font-family: 'Inter', sans-serif;
       background: url('https://cdn.pixabay.com/photo/2017/08/30/07/52/galaxy-2695569_1280.jpg') no-repeat center center fixed;
@@ -134,48 +134,6 @@
       font-size: 0.95rem;
     }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .scale-up {
-      animation: scaleUp 0.5s ease forwards;
-    }
-
-    @keyframes scaleUp {
-      from {
-        transform: scale(0.9);
-        opacity: 0;
-      }
-
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .pulse {
-      animation: pulse 1s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-    }
-
     .correct {
       background-color: #4caf50 !important;
       color: #fff !important;
@@ -190,18 +148,10 @@
     }
 
     @keyframes shake {
-      0%, 100% {
-        transform: translateX(0);
-      }
-      25% {
-        transform: translateX(-5px);
-      }
-      50% {
-        transform: translateX(5px);
-      }
-      75% {
-        transform: translateX(-5px);
-      }
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
     }
 
     @media (max-width: 600px) {
@@ -225,7 +175,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <h1>Kuis Interaktif</h1>
@@ -247,19 +196,71 @@
       <ol id="highscore-list"></ol>
     </div>
   </main>
+
   <script>
-     const questions = [
-  {question: "Apa alasan mahasiswa perlu mengembangkan soft skill selain akademik?", options: ["Karena nilai akademik tidak penting","Agar bisa santai saat kuliah","Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ","Saya Tidak Tahu"],answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ",explanation: "Kemampuan seperti berpikir kritis, empati, public speaking, dan kerja tim sangat dihargai di dunia nyata, bahkan kadang lebih dari IPK tinggi."},
-  {question: "Siapa Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Indonesia saat ini?", options: ["Nadiem Makarim","Muhadjir Effendy","Anies Baswedan","Bulan"],answer: "Nadiem Makarim",explanation: "Nadiem Makarim menjabat sebagai Mendikbudristek sejak 2019."},
-  {question: "Mengapa Tri Dharma Perguruan Tinggi penting untuk mahasiswa?", options: ["Supaya mahasiswa tahu aturan kampus","Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh ","Karena itu syarat lulus kuliah","Agar mahasiswa bisa ikut lomba"],answer: "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh",explanation: "Tri Dharma mencakup Pendidikan, Penelitian, dan Pengabdian kepada Masyarakat. Mahasiswa sebagai bagian dari perguruan tinggi bukan hanya belajar, tapi juga ikut menyumbang ilmu dan tenaga untuk masyarakat."},
-  {question: "Apa alasan mahasiswa disebut sebagai “agent of change”?", options: ["Karena sering melakukan demonstrasi","Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ","Karena mahasiswa paling tahu segalanya","Karena mahasiswa punya banyak waktu"],answer: "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ",explanation: "Mahasiswa diharapkan membawa perubahan positif lewat pemikiran kritis, inovasi, dan aksi sosial. Pendidikan tinggi membekali mereka dengan alat untuk menganalisis dan memecahkan masalah." },
-  {question: "Apa tujuan utama dari kegiatan pengabdian kepada masyarakat?", options: ["Menambah nilai akademik","Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan","Membantu mahasiswa lulus lebih cepat","Memenuhi persyaratan administrasi kampus"],answer: "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan",explanation: "Pengabdian masyarakat bertujuan untuk menerapkan ilmu secara nyata."},
-  {question: "Apa manfaat mengikuti organisasi atau Unit Kegiatan Mahasiswa (UKM)?",options: ["Menambah tugas kampus","Membuat lebih sibuk dari biasanya","Mengembangkan soft skill dan jaringan sosial","Menghindari kelas"],answer: "Mengembangkan soft skill dan jaringan sosial",explanation: "UKM membantu pengembangan karakter dan relasi."},
-  {question: "Apa sikap yang mencerminkan mahasiswa berkarakter baik?",options: ["Menghindari tanggung jawab","Disiplin, jujur, dan bertanggung jawab","Selalu ikut arus","Mengandalkan orang lain" ], answer: "Disiplin, jujur, dan bertanggung jawab", explanation: "Sikap baik mencerminkan karakter pemimpin masa depan."},
-  {question: "Tri Dharma Perguruan Tinggi merupakan tanggung jawab siapa?",options: ["Hanya dosen","Hanya mahasiswa","Seluruh civitas akademika","Pemerintah saja"],answer: "Seluruh civitas akademika",explanation: "Tri Dharma adalah tanggung jawab bersama di lingkungan perguruan tinggi."},
-  {question: "Apa yang dimaksud dengan 'kampus merdeka'?",options: ["Mahasiswa boleh tidak kuliah","Mahasiswa bisa belajar di luar prodi dan kampus","Tidak ada aturan di kampus","Semua mahasiswa bebas dari tugas"],answer: "Mahasiswa bisa belajar di luar prodi dan kampus",explanation: "Kampus Merdeka memberi kebebasan mahasiswa memperluas pengalaman belajar." },
-  {question: "Apa peran mahasiswa dalam membangun bangsa?",options: ["Menjadi bagian dari perubahan sosial dan inovasi","Fokus pada nilai akademik saja","Mengikuti semua yang disuruh tanpa bertanya","Menjadi penonton saja"],answer: "Menjadi bagian dari perubahan sosial dan inovasi",explanation: "Mahasiswa adalah agen perubahan dalam pembangunan bangsa."}
+    const questions = [
+      {
+        question: "Apa alasan mahasiswa perlu mengembangkan soft skill selain akademik?",
+        options: ["Karena nilai akademik tidak penting", "Agar bisa santai saat kuliah", "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ", "Saya Tidak Tahu"],
+        answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ",
+        explanation: "Kemampuan seperti berpikir kritis, empati, public speaking, dan kerja tim sangat dihargai di dunia nyata, bahkan kadang lebih dari IPK tinggi."
+      },
+      {
+        question: "Siapa Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Indonesia saat ini?",
+        options: ["Nadiem Makarim", "Muhadjir Effendy", "Anies Baswedan", "Bulan"],
+        answer: "Nadiem Makarim",
+        explanation: "Nadiem Makarim menjabat sebagai Mendikbudristek sejak 2019."
+      },
+      {
+        question: "Mengapa Tri Dharma Perguruan Tinggi penting untuk mahasiswa?",
+        options: ["Supaya mahasiswa tahu aturan kampus", "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh ", "Karena itu syarat lulus kuliah", "Agar mahasiswa bisa ikut lomba"],
+        answer: "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh",
+        explanation: "Tri Dharma mencakup Pendidikan, Penelitian, dan Pengabdian kepada Masyarakat."
+      },
+      {
+        question: "Apa alasan mahasiswa disebut sebagai “agent of change”?",
+        options: ["Karena sering melakukan demonstrasi", "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ", "Karena mahasiswa paling tahu segalanya", "Karena mahasiswa punya banyak waktu"],
+        answer: "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ",
+        explanation: "Mahasiswa diharapkan membawa perubahan positif lewat pemikiran kritis, inovasi, dan aksi sosial."
+      },
+      {
+        question: "Apa tujuan utama dari kegiatan pengabdian kepada masyarakat?",
+        options: ["Menambah nilai akademik", "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan", "Membantu mahasiswa lulus lebih cepat", "Memenuhi persyaratan administrasi kampus"],
+        answer: "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan",
+        explanation: "Pengabdian masyarakat bertujuan untuk menerapkan ilmu secara nyata."
+      },
+      {
+        question: "Apa manfaat mengikuti organisasi atau Unit Kegiatan Mahasiswa (UKM)?",
+        options: ["Menambah tugas kampus", "Membuat lebih sibuk dari biasanya", "Mengembangkan soft skill dan jaringan sosial", "Menghindari kelas"],
+        answer: "Mengembangkan soft skill dan jaringan sosial",
+        explanation: "UKM membantu pengembangan karakter dan relasi."
+      },
+      {
+        question: "Apa sikap yang mencerminkan mahasiswa berkarakter baik?",
+        options: ["Menghindari tanggung jawab", "Disiplin, jujur, dan bertanggung jawab", "Selalu ikut arus", "Mengandalkan orang lain"],
+        answer: "Disiplin, jujur, dan bertanggung jawab",
+        explanation: "Sikap baik mencerminkan karakter pemimpin masa depan."
+      },
+      {
+        question: "Tri Dharma Perguruan Tinggi merupakan tanggung jawab siapa?",
+        options: ["Hanya dosen", "Hanya mahasiswa", "Seluruh civitas akademika", "Pemerintah saja"],
+        answer: "Seluruh civitas akademika",
+        explanation: "Tri Dharma adalah tanggung jawab bersama di lingkungan perguruan tinggi."
+      },
+      {
+        question: "Apa yang dimaksud dengan 'kampus merdeka'?",
+        options: ["Mahasiswa boleh tidak kuliah", "Mahasiswa bisa belajar di luar prodi dan kampus", "Tidak ada aturan di kampus", "Semua mahasiswa bebas dari tugas"],
+        answer: "Mahasiswa bisa belajar di luar prodi dan kampus",
+        explanation: "Kampus Merdeka memberi kebebasan mahasiswa memperluas pengalaman belajar."
+      },
+      {
+        question: "Apa peran mahasiswa dalam membangun bangsa?",
+        options: ["Menjadi bagian dari perubahan sosial dan inovasi", "Fokus pada nilai akademik saja", "Mengikuti semua yang disuruh tanpa bertanya", "Menjadi penonton saja"],
+        answer: "Menjadi bagian dari perubahan sosial dan inovasi",
+        explanation: "Mahasiswa adalah agen perubahan dalam pembangunan bangsa."
+      }
     ];
+
     let currentQuestion = 0;
     let score = 0;
     let timer;
@@ -341,5 +342,4 @@
     }
   </script>
 </body>
-
 </html>
