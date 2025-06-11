@@ -248,24 +248,18 @@
     </div>
   </main>
   <script>
-    const questions = [
-      {
-        question: "Apa ibu kota Indonesia?",
-        options: ["Jakarta", "Bandung", "Surabaya", "Medan"],
-        answer: "Jakarta"
-      },
-      {
-        question: "2 + 2 = ?",
-        options: ["3", "4", "5", "6"],
-        answer: "4"
-      },
-      {
-        question: "Warna bendera Indonesia?",
-        options: ["Merah Putih", "Putih Biru", "Hijau Merah", "Kuning Merah"],
-        answer: "Merah Putih"
-      }
+     const questions = [
+      { question: "5 x 9 = ?", options: ["32", "45", "55", "60"], answer: "45", explanation: "5 x 9 = 45." },
+      { question: "Benda langit yang mengelilingi Bumi?", options: ["Matahari", "Mars", "Bulan", "Venus"], answer: "Bulan", explanation: "Bulan mengelilingi Bumi." },
+      { question: "Warna primer berikut ini adalah?", options: ["Merah", "Ungu", "Hijau", "Coklat"], answer: "Merah", explanation: "Warna primer: Merah, Kuning, Biru." },
+      { question: "Negara dengan piramida terkenal?", options: ["India", "Italia", "Mesir", "Meksiko"], answer: "Mesir", explanation: "Mesir terkenal dengan piramida." },
+      { question: "Hewan berkaki 8?", options: ["Laba-laba", "Kucing", "Ular", "Sapi"], answer: "Laba-laba", explanation: "Laba-laba memiliki 8 kaki." },
+      { question: "Ibukota Jepang?", options: ["Osaka", "Tokyo", "Kyoto", "Hiroshima"], answer: "Tokyo", explanation: "Ibukota Jepang adalah Tokyo." },
+      { question: "Jumlah hari dalam seminggu?", options: ["5", "6", "7", "8"], answer: "7", explanation: "Ada 7 hari dalam seminggu." },
+      { question: "Benda cair di bawah ini?", options: ["Es", "Air", "Batu", "Kayu"], answer: "Air", explanation: "Air adalah zat cair." },
+      { question: "Organ untuk mendengar?", options: ["Mata", "Telinga", "Hidung", "Mulut"], answer: "Telinga", explanation: "Kita mendengar dengan telinga." },
+      { question: "Angka sebelum 10?", options: ["8", "9", "11", "7"], answer: "9", explanation: "Angka sebelum 10 adalah 9." }
     ];
-
     let currentQuestion = 0;
     let score = 0;
     let timer;
