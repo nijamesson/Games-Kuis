@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Game Kuis Interaktif - 10 Soal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <title>Game Kuis Interaktif</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: url('https://cdn.pixabay.com/photo/2017/08/30/07/52/galaxy-2695569_1280.jpg') no-repeat center center fixed;
@@ -20,7 +22,6 @@
 
     header {
       background-color: rgba(0, 0, 0, 0.6);
-      color: rgb(255, 255, 255);
       padding: 1rem;
       backdrop-filter: blur(5px);
     }
@@ -28,18 +29,19 @@
     main.container {
       padding: 2rem;
       max-width: 600px;
-      margin: auto;
+      margin: 2rem auto;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      margin-top: 2rem;
     }
 
     input[type="text"] {
-      padding: 0.5rem;
+      padding: 0.7rem;
       width: 80%;
       margin-bottom: 1rem;
       font-size: 1rem;
+      border-radius: 6px;
+      border: none;
     }
 
     button {
@@ -47,15 +49,18 @@
       font-size: 1rem;
       margin: 0.5rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       background-color: #00bcd4;
-      color: rgb(255, 255, 255);
+      color: white;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s ease;
+      font-weight: 600;
     }
 
     button:hover {
       background-color: #0097a7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 188, 212, 0.4);
     }
 
     .question {
@@ -70,10 +75,32 @@
       margin: 0.5rem 0;
       background-color: #eceff1;
       color: #000;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     #options button:hover {
-      background-color: #cfd8dc;
+      background-color: #d9e1e8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .correct {
+      background-color: #4caf50 !important;
+      color: #fff !important;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #4caf50;
+    }
+
+    .wrong {
+      background-color: #f44336 !important;
+      color: #fff !important;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #f44336;
     }
 
     #progress {
@@ -107,114 +134,41 @@
       text-align: left;
     }
 
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.6s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .scale-up {
-      animation: scaleUp 0.5s ease forwards;
-    }
-
-    @keyframes scaleUp {
-      from {
-        transform: scale(0.8);
-        opacity: 0;
-      }
-
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    .pulse {
-      animation: pulse 1s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.05);
-      }
-    }
-
-    .wrong {
-      animation: shake 0.5s ease;
-      background-color: #f44336 !important;
-      color: #fff !important;
-    }
-
-    .correct {
-      background-color: #4caf50 !important;
-      color: #fff !important;
-    }
-
-    @keyframes shake {
-      0% {
-        transform: translateX(0);
-      }
-
-      25% {
-        transform: translateX(-5px);
-      }
-
-      50% {
-        transform: translateX(5px);
-      }
-
-      75% {
-        transform: translateX(-5px);
-      }
-
-      100% {
-        transform: translateX(0);
+    @media (max-width: 600px) {
+      main.container {
+        margin: 1rem;
+        padding: 1.5rem;
       }
     }
   </style>
 </head>
-
 <body>
-  <div id="app" class="fade-in">
-    <header class="scale-up">
-      <h1>Game Kuis Interaktif</h1>
-    </header>
-    <main class="container scale-up" role="main" aria-live="polite">
-      <section id="playerName">
-        <input type="text" id="nameInput" placeholder="Masukkan nama Anda" aria-required="true" />
-        <button id="startBtn" class="pulse">Mulai</button>
-      </section>
+  <header>
+    <h1>Game Kuis Interaktif</h1>
+  </header>
+  <main class="container">
+    <section id="playerName">
+      <input type="text" id="nameInput" placeholder="Masukkan nama Anda" />
+      <button id="startBtn">Mulai</button>
+    </section>
 
-      <section id="quizContainer" hidden>
-        <div id="timer" class="fade-in">Waktu: 30 detik</div>
-        <div id="progress">
-          <div id="progress-bar"></div>
-        </div>
-        <div class="question" id="question"></div>
-        <div id="options"></div>
-        <div id="explanation"></div>
-        <div id="score"></div>
-        <button id="restartBtn" hidden>Ulangi Kuis</button>
-      </section>
+    <section id="quizContainer" hidden>
+      <div id="timer">Waktu: 30 detik</div>
+      <div id="progress">
+        <div id="progress-bar"></div>
+      </div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div id="explanation"></div>
+      <div id="score"></div>
+      <button id="restartBtn" hidden>Ulangi Kuis</button>
+    </section>
 
-      <section id="highscore" hidden>
-        <h3>🏆 Leaderboard</h3>
-        <ol></ol>
-      </section>
-    </main>
-  </div>
+    <section id="highscore" hidden>
+      <h3>🏆 Leaderboard</h3>
+      <ol></ol>
+    </section>
+  </main>
 
   <audio id="correctSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_5be3a144f3.mp3" preload="auto"></audio>
   <audio id="wrongSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_ea7fc8d3f7.mp3" preload="auto"></audio>
@@ -282,10 +236,10 @@
         scoreEl.textContent = `${playerName}, skor akhir Anda: ${score}/${questions.length}`;
         restartBtn.hidden = false;
         updateHighScore(score);
-        quizContainer.hidden = false;
         highscoreEl.hidden = false;
         return;
       }
+
       updateProgress();
       startTimer();
       const q = questions[current];
@@ -295,7 +249,6 @@
       q.options.forEach(opt => {
         const btn = document.createElement("button");
         btn.textContent = opt;
-        btn.classList.add("fade-in");
         btn.onclick = () => {
           clearInterval(timerInterval);
           showExplanation(opt, btn);
@@ -356,5 +309,4 @@
     }
   </script>
 </body>
-
 </html>
