@@ -249,16 +249,18 @@
   </main>
   <script>
      const questions = [
-      { question: "5 x 9 = ?", options: ["32", "45", "55", "60"], answer: "45", explanation: "5 x 9 = 45." },
-      { question: "Benda langit yang mengelilingi Bumi?", options: ["Matahari", "Mars", "Bulan", "Venus"], answer: "Bulan", explanation: "Bulan mengelilingi Bumi." },
-      { question: "Warna primer berikut ini adalah?", options: ["Merah", "Ungu", "Hijau", "Coklat"], answer: "Merah", explanation: "Warna primer: Merah, Kuning, Biru." },
-      { question: "Negara dengan piramida terkenal?", options: ["India", "Italia", "Mesir", "Meksiko"], answer: "Mesir", explanation: "Mesir terkenal dengan piramida." },
-      { question: "Hewan berkaki 8?", options: ["Laba-laba", "Kucing", "Ular", "Sapi"], answer: "Laba-laba", explanation: "Laba-laba memiliki 8 kaki." },
-      { question: "Ibukota Jepang?", options: ["Osaka", "Tokyo", "Kyoto", "Hiroshima"], answer: "Tokyo", explanation: "Ibukota Jepang adalah Tokyo." },
-      { question: "Jumlah hari dalam seminggu?", options: ["5", "6", "7", "8"], answer: "7", explanation: "Ada 7 hari dalam seminggu." },
-      { question: "Benda cair di bawah ini?", options: ["Es", "Air", "Batu", "Kayu"], answer: "Air", explanation: "Air adalah zat cair." },
-      { question: "Organ untuk mendengar?", options: ["Mata", "Telinga", "Hidung", "Mulut"], answer: "Telinga", explanation: "Kita mendengar dengan telinga." },
-      { question: "Angka sebelum 10?", options: ["8", "9", "11", "7"], answer: "9", explanation: "Angka sebelum 10 adalah 9." }
+  {question: "Apa alasan mahasiswa perlu mengembangkan soft skill selain akademik?", options: ["Karena nilai akademik tidak penting","Agar bisa santai saat kuliah","Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ","Saya Tidak Tahu"],answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ",explanation: "Kemampuan seperti berpikir kritis, empati, public speaking, dan kerja tim sangat dihargai di dunia nyata, bahkan kadang lebih dari IPK tinggi."},
+  {question: "Siapa Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Indonesia saat ini?", options: ["Nadiem Makarim","Muhadjir Effendy","Anies Baswedan","Bulan"],answer: "Nadiem Makarim",explanation: "Nadiem Makarim menjabat sebagai Mendikbudristek sejak 2019."},
+  {question: "Mengapa Tri Dharma Perguruan Tinggi penting untuk mahasiswa?", options: ["Supaya mahasiswa tahu aturan kampus","Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh ","Karena itu syarat lulus kuliah","Agar mahasiswa bisa ikut lomba"],answer: "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh",explanation: "Tri Dharma mencakup Pendidikan, Penelitian, dan Pengabdian kepada Masyarakat. Mahasiswa sebagai bagian dari perguruan tinggi bukan hanya belajar, tapi juga ikut menyumbang ilmu dan tenaga untuk masyarakat."},
+  {question: "Apa alasan mahasiswa disebut sebagai “agent of change”?", options: ["Karena sering melakukan demonstrasi","Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ","Karena mahasiswa paling tahu segalanya","Karena mahasiswa punya banyak waktu"],answer: "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ",explanation: "Mahasiswa diharapkan membawa perubahan positif lewat pemikiran kritis, inovasi, dan aksi sosial. Pendidikan tinggi membekali mereka dengan alat untuk menganalisis dan memecahkan masalah." },
+  {question: "Apa tujuan utama dari kegiatan pengabdian kepada masyarakat?", options: ["Menambah nilai akademik","Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan","Membantu mahasiswa lulus lebih cepat","Memenuhi persyaratan administrasi kampus"],answer: "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan",explanation: "Pengabdian masyarakat bertujuan untuk menerapkan ilmu secara nyata."},
+  {question: "Apa manfaat mengikuti organisasi atau Unit Kegiatan Mahasiswa (UKM)?",options: ["Menambah tugas kampus","Membuat lebih sibuk dari biasanya","Mengembangkan soft skill dan jaringan sosial","Menghindari kelas"],answer: "Mengembangkan soft skill dan jaringan sosial",explanation: "UKM membantu pengembangan karakter dan relasi."},
+  {question: "Apa sikap yang mencerminkan mahasiswa berkarakter baik?",options: ["Menghindari tanggung jawab","Disiplin, jujur, dan bertanggung jawab","Selalu ikut arus","Mengandalkan orang lain" ], answer: "Disiplin, jujur, dan bertanggung jawab", explanation: "Sikap baik mencerminkan karakter pemimpin masa depan."},
+  {question: "Tri Dharma Perguruan Tinggi merupakan tanggung jawab siapa?",options: ["Hanya dosen","Hanya mahasiswa","Seluruh civitas akademika","Pemerintah saja"],answer: "Seluruh civitas akademika",explanation: "Tri Dharma adalah tanggung jawab bersama di lingkungan perguruan tinggi."},
+  {question: "Apa yang dimaksud dengan 'kampus merdeka'?",options: ["Mahasiswa boleh tidak kuliah","Mahasiswa bisa belajar di luar prodi dan kampus","Tidak ada aturan di kampus","Semua mahasiswa bebas dari tugas"],answer: "Mahasiswa bisa belajar di luar prodi dan kampus",explanation: "Kampus Merdeka memberi kebebasan mahasiswa memperluas pengalaman belajar." },
+  {question: "Apa peran mahasiswa dalam membangun bangsa?",options: ["Menjadi bagian dari perubahan sosial dan inovasi","Fokus pada nilai akademik saja","Mengikuti semua yang disuruh tanpa bertanya","Menjadi penonton saja"],answer: "Menjadi bagian dari perubahan sosial dan inovasi",explanation: "Mahasiswa adalah agen perubahan dalam pembangunan bangsa."}
+];
+
     ];
     let currentQuestion = 0;
     let score = 0;
