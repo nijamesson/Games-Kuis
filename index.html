@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kuis Interaktif</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* CSS sama seperti sebelumnya (tidak diubah) */
     body {
       font-family: 'Inter', sans-serif;
       background: url('https://cdn.pixabay.com/photo/2017/08/30/07/52/galaxy-2695569_1280.jpg') no-repeat center center fixed;
@@ -16,14 +15,11 @@
       text-align: center;
       color: #fff;
     }
-
     header {
       background-color: rgba(0, 0, 0, 0.6);
-      color: #fff;
       padding: 1rem;
       backdrop-filter: blur(5px);
     }
-
     main.container {
       padding: 1.5rem;
       max-width: 90%;
@@ -33,75 +29,44 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       margin-top: 1.5rem;
     }
-
-    #start-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem;
+    #start-screen, #quiz-container, #highscore {
+      margin-top: 1rem;
     }
-
-    #start-screen input[type="text"] {
-      width: 100%;
-      max-width: 300px;
-      padding: 0.6rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-
-    #start-screen button {
-      width: 100%;
-      max-width: 150px;
-      font-size: 1rem;
-    }
-
     input[type="text"] {
-      padding: 0.5rem;
+      padding: 0.6rem;
       width: 90%;
+      max-width: 300px;
       font-size: 1rem;
       border-radius: 5px;
       border: none;
     }
-
     button {
       padding: 0.6rem 1rem;
-      font-size: 0.95rem;
-      margin: 0.5rem 0;
+      font-size: 1rem;
       border: none;
       border-radius: 6px;
       background-color: #00bcd4;
       color: #fff;
       cursor: pointer;
       transition: background-color 0.3s ease;
-      max-width: 100%;
     }
-
     button:hover {
       background-color: #0097a7;
     }
-
     .question {
       font-weight: bold;
       margin-bottom: 1rem;
-      font-size: 1.1rem;
     }
-
     #options button {
       display: block;
       width: 100%;
-      max-width: 100%;
       margin: 0.4rem 0;
       background-color: #eceff1;
       color: #000;
-      font-size: 1rem;
     }
-
     #options button:hover {
       background-color: #cfd8dc;
     }
-
     #progress {
       height: 10px;
       background-color: #ccc;
@@ -109,69 +74,27 @@
       border-radius: 5px;
       overflow: hidden;
     }
-
     #progress-bar {
       height: 100%;
       background-color: #4caf50;
       width: 0%;
       transition: width 0.3s ease;
     }
-
-    #timer {
-      margin-bottom: 1rem;
-      font-weight: bold;
-    }
-
-    #score {
-      margin-top: 1rem;
-      font-size: 1rem;
-    }
-
-    #highscore ol {
-      padding-left: 0;
-      list-style-position: inside;
-      text-align: left;
-      font-size: 0.95rem;
-    }
-
     .correct {
       background-color: #4caf50 !important;
       color: #fff !important;
-      transition: transform 0.2s ease;
       transform: scale(1.05);
     }
-
     .wrong {
       animation: shake 0.4s ease;
       background-color: #f44336 !important;
       color: #fff !important;
     }
-
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       25% { transform: translateX(-5px); }
       50% { transform: translateX(5px); }
       75% { transform: translateX(-5px); }
-    }
-
-    @media (max-width: 600px) {
-      main.container {
-        padding: 1rem;
-        margin-top: 1rem;
-      }
-
-      .question {
-        font-size: 1rem;
-      }
-
-      button {
-        font-size: 0.9rem;
-        padding: 0.6rem;
-      }
-
-      input[type="text"] {
-        font-size: 0.9rem;
-      }
     }
   </style>
 </head>
@@ -181,10 +104,10 @@
   </header>
   <main class="container">
     <div id="start-screen">
-      <input type="text" id="username" placeholder="Masukkan nama Anda" required>
+      <input type="text" id="username" placeholder="Masukkan nama Anda" />
       <button onclick="startQuiz()">Mulai Kuis</button>
     </div>
-    <div id="quiz-container" style="display: none;">
+    <div id="quiz-container" style="display:none;">
       <div id="timer"></div>
       <div id="progress"><div id="progress-bar"></div></div>
       <div class="question" id="question-text"></div>
@@ -199,7 +122,7 @@
 
   <script>
     const questions = [
-      {
+       {
         question: "Apa alasan mahasiswa perlu mengembangkan soft skill selain akademik?",
         options: ["Karena nilai akademik tidak penting", "Agar bisa santai saat kuliah", "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ", "Saya Tidak Tahu"],
         answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ",
@@ -265,9 +188,10 @@
     let score = 0;
     let timer;
     let timeLeft = 15;
+    let userAnswers = [];
 
     function startQuiz() {
-      const name = document.getElementById('username').value;
+      const name = document.getElementById('username').value.trim();
       if (!name) {
         alert("Masukkan nama terlebih dahulu!");
         return;
@@ -289,12 +213,22 @@
         btn.onclick = () => checkAnswer(btn, q.answer);
         optionsDiv.appendChild(btn);
       });
+      document.getElementById("score").textContent = `Skor: ${score}`;
     }
 
     function checkAnswer(btn, correct) {
+      const q = questions[currentQuestion];
+      const userAnswer = btn.textContent;
       const buttons = document.querySelectorAll("#options button");
       buttons.forEach(b => b.disabled = true);
-      if (btn.textContent === correct) {
+
+      userAnswers.push({
+        question: q.question,
+        answer: userAnswer,
+        correct: userAnswer === correct
+      });
+
+      if (userAnswer === correct) {
         btn.classList.add("correct");
         score++;
       } else {
@@ -303,39 +237,7 @@
           if (b.textContent === correct) b.classList.add("correct");
         });
       }
-  const userAnswers = [];
-  function checkAnswer(btn, correct) {
-  const q = questions[currentQuestion];
-  const userAnswer = btn.textContent || "Waktu habis";
 
-  // Simpan jawaban
-  userAnswers.push({
-    question: q.question,
-    answer: userAnswer,
-    correct: userAnswer === correct
-  });
-
-  // Di akhir kuis panggil:
-  if (currentQuestion >= questions.length) {
-    saveToFirebase();
-  }
-}
-      function saveToFirebase() {
-  const name = document.getElementById("username").value;
-  const payload = {
-    name,
-    score,
-    answers: userAnswers,
-    timestamp: new Date().toISOString()
-  };
-
-  const db = firebase.database(); // atau firebase.firestore() jika pakai Firestore
-  db.ref("responses").push(payload).then(() => {
-    showHighscore();
-  });
-}
-
-      document.getElementById("score").textContent = Skor: ${score};
       clearInterval(timer);
       setTimeout(() => {
         currentQuestion++;
@@ -344,33 +246,42 @@
           showQuestion();
           startTimer();
         } else {
-          showHighscore();
+          saveToFirebase(); // Dummy dulu
         }
-      }, 1200);
+      }, 1000);
     }
 
     function startTimer() {
-      document.getElementById("timer").textContent = Waktu: ${timeLeft}s;
+      document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
       timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").textContent = Waktu: ${timeLeft}s;
-        document.getElementById("progress-bar").style.width = ${(timeLeft / 15) * 100}%;
+        document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
+        document.getElementById("progress-bar").style.width = `${(timeLeft / 15) * 100}%`;
         if (timeLeft <= 0) {
           clearInterval(timer);
-          checkAnswer({ textContent: "" }, questions[currentQuestion].answer);
+          checkAnswer({ textContent: "Waktu habis" }, questions[currentQuestion].answer);
         }
       }, 1000);
+    }
+
+    function saveToFirebase() {
+      // Ini dummy, ganti dengan Firebase jika sudah siap
+      console.log("Jawaban disimpan (sementara):", {
+        name: document.getElementById("username").value,
+        score,
+        answers: userAnswers
+      });
+      showHighscore();
     }
 
     function showHighscore() {
       document.getElementById("quiz-container").style.display = 'none';
       document.getElementById("highscore").style.display = 'block';
       const username = document.getElementById("username").value;
-      const entry = ${username} - Skor: ${score};
-      const list = document.getElementById("highscore-list");
+      const entry = `${username} - Skor: ${score}`;
       const item = document.createElement("li");
       item.textContent = entry;
-      list.appendChild(item);
+      document.getElementById("highscore-list").appendChild(item);
     }
   </script>
 </body>
