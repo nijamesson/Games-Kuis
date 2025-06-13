@@ -6,7 +6,7 @@
   <title>Kuis Interaktif</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Gaya CSS tetap sama */
+    /* CSS sama seperti sebelumnya (tidak diubah) */
     body {
       font-family: 'Inter', sans-serif;
       background: url('https://cdn.pixabay.com/photo/2017/08/30/07/52/galaxy-2695569_1280.jpg') no-repeat center center fixed;
@@ -42,8 +42,7 @@
       padding: 1rem;
     }
 
-    #start-screen input[type="text"],
-    #start-screen button {
+    #start-screen input[type="text"] {
       width: 100%;
       max-width: 300px;
       padding: 0.6rem;
@@ -52,15 +51,31 @@
       border: none;
     }
 
+    #start-screen button {
+      width: 100%;
+      max-width: 150px;
+      font-size: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      width: 90%;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+
     button {
       padding: 0.6rem 1rem;
       font-size: 0.95rem;
+      margin: 0.5rem 0;
       border: none;
       border-radius: 6px;
       background-color: #00bcd4;
       color: #fff;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      max-width: 100%;
     }
 
     button:hover {
@@ -76,9 +91,11 @@
     #options button {
       display: block;
       width: 100%;
+      max-width: 100%;
       margin: 0.4rem 0;
       background-color: #eceff1;
       color: #000;
+      font-size: 1rem;
     }
 
     #options button:hover {
@@ -114,18 +131,20 @@
       padding-left: 0;
       list-style-position: inside;
       text-align: left;
+      font-size: 0.95rem;
     }
 
     .correct {
       background-color: #4caf50 !important;
       color: #fff !important;
+      transition: transform 0.2s ease;
       transform: scale(1.05);
     }
 
     .wrong {
+      animation: shake 0.4s ease;
       background-color: #f44336 !important;
       color: #fff !important;
-      animation: shake 0.4s ease;
     }
 
     @keyframes shake {
@@ -133,6 +152,26 @@
       25% { transform: translateX(-5px); }
       50% { transform: translateX(5px); }
       75% { transform: translateX(-5px); }
+    }
+
+    @media (max-width: 600px) {
+      main.container {
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      .question {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 0.6rem;
+      }
+
+      input[type="text"] {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -145,7 +184,6 @@
       <input type="text" id="username" placeholder="Masukkan nama Anda" required>
       <button onclick="startQuiz()">Mulai Kuis</button>
     </div>
-
     <div id="quiz-container" style="display: none;">
       <div id="timer"></div>
       <div id="progress"><div id="progress-bar"></div></div>
@@ -153,59 +191,83 @@
       <div id="options"></div>
       <div id="score"></div>
     </div>
-
     <div id="highscore" style="display:none;">
       <h3>Skor Tertinggi</h3>
       <ol id="highscore-list"></ol>
     </div>
   </main>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-  <script>
-    // Ganti dengan konfigurasi Firebase milikmu
-    const firebaseConfig = {
-      apiKey: "API_KEY_MU",
-      authDomain: "PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://PROJECT_ID-default-rtdb.firebaseio.com",
-      projectId: "PROJECT_ID",
-      storageBucket: "PROJECT_ID.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "APP_ID_MU"
-    };
-    firebase.initializeApp(firebaseConfig);
-  </script>
-
-  <!-- Script Kuis -->
   <script>
     const questions = [
       {
         question: "Apa alasan mahasiswa perlu mengembangkan soft skill selain akademik?",
         options: ["Karena nilai akademik tidak penting", "Agar bisa santai saat kuliah", "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ", "Saya Tidak Tahu"],
-        answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan "
+        answer: "Karena soft skill menunjang kolaborasi, komunikasi, dan kepemimpinan ",
+        explanation: "Kemampuan seperti berpikir kritis, empati, public speaking, dan kerja tim sangat dihargai di dunia nyata, bahkan kadang lebih dari IPK tinggi."
       },
       {
         question: "Siapa Menteri Pendidikan, Kebudayaan, Riset, dan Teknologi Indonesia saat ini?",
         options: ["Nadiem Makarim", "Muhadjir Effendy", "Anies Baswedan", "Bulan"],
-        answer: "Nadiem Makarim"
+        answer: "Nadiem Makarim",
+        explanation: "Nadiem Makarim menjabat sebagai Mendikbudristek sejak 2019."
       },
       {
         question: "Mengapa Tri Dharma Perguruan Tinggi penting untuk mahasiswa?",
-        options: ["Supaya mahasiswa tahu aturan kampus", "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh", "Karena itu syarat lulus kuliah", "Agar mahasiswa bisa ikut lomba"],
-        answer: "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh"
+        options: ["Supaya mahasiswa tahu aturan kampus", "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh ", "Karena itu syarat lulus kuliah", "Agar mahasiswa bisa ikut lomba"],
+        answer: "Untuk membentuk mahasiswa sebagai individu akademik dan sosial yang utuh",
+        explanation: "Tri Dharma mencakup Pendidikan, Penelitian, dan Pengabdian kepada Masyarakat."
+      },
+      {
+        question: "Apa alasan mahasiswa disebut sebagai “agent of change”?",
+        options: ["Karena sering melakukan demonstrasi", "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ", "Karena mahasiswa paling tahu segalanya", "Karena mahasiswa punya banyak waktu"],
+        answer: "Karena mahasiswa adalah generasi penerus bangsa dengan akses terhadap ilmu pengetahuan ",
+        explanation: "Mahasiswa diharapkan membawa perubahan positif lewat pemikiran kritis, inovasi, dan aksi sosial."
+      },
+      {
+        question: "Apa tujuan utama dari kegiatan pengabdian kepada masyarakat?",
+        options: ["Menambah nilai akademik", "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan", "Membantu mahasiswa lulus lebih cepat", "Memenuhi persyaratan administrasi kampus"],
+        answer: "Meningkatkan kesejahteraan masyarakat dengan ilmu pengetahuan",
+        explanation: "Pengabdian masyarakat bertujuan untuk menerapkan ilmu secara nyata."
+      },
+      {
+        question: "Apa manfaat mengikuti organisasi atau Unit Kegiatan Mahasiswa (UKM)?",
+        options: ["Menambah tugas kampus", "Membuat lebih sibuk dari biasanya", "Mengembangkan soft skill dan jaringan sosial", "Menghindari kelas"],
+        answer: "Mengembangkan soft skill dan jaringan sosial",
+        explanation: "UKM membantu pengembangan karakter dan relasi."
+      },
+      {
+        question: "Apa sikap yang mencerminkan mahasiswa berkarakter baik?",
+        options: ["Menghindari tanggung jawab", "Disiplin, jujur, dan bertanggung jawab", "Selalu ikut arus", "Mengandalkan orang lain"],
+        answer: "Disiplin, jujur, dan bertanggung jawab",
+        explanation: "Sikap baik mencerminkan karakter pemimpin masa depan."
+      },
+      {
+        question: "Tri Dharma Perguruan Tinggi merupakan tanggung jawab siapa?",
+        options: ["Hanya dosen", "Hanya mahasiswa", "Seluruh civitas akademika", "Pemerintah saja"],
+        answer: "Seluruh civitas akademika",
+        explanation: "Tri Dharma adalah tanggung jawab bersama di lingkungan perguruan tinggi."
+      },
+      {
+        question: "Apa yang dimaksud dengan 'kampus merdeka'?",
+        options: ["Mahasiswa boleh tidak kuliah", "Mahasiswa bisa belajar di luar prodi dan kampus", "Tidak ada aturan di kampus", "Semua mahasiswa bebas dari tugas"],
+        answer: "Mahasiswa bisa belajar di luar prodi dan kampus",
+        explanation: "Kampus Merdeka memberi kebebasan mahasiswa memperluas pengalaman belajar."
+      },
+      {
+        question: "Apa peran mahasiswa dalam membangun bangsa?",
+        options: ["Menjadi bagian dari perubahan sosial dan inovasi", "Fokus pada nilai akademik saja", "Mengikuti semua yang disuruh tanpa bertanya", "Menjadi penonton saja"],
+        answer: "Menjadi bagian dari perubahan sosial dan inovasi",
+        explanation: "Mahasiswa adalah agen perubahan dalam pembangunan bangsa."
       }
-      // ... tambahkan pertanyaan lainnya di sini
     ];
 
     let currentQuestion = 0;
     let score = 0;
     let timer;
     let timeLeft = 15;
-    let userAnswers = [];
 
     function startQuiz() {
-      const name = document.getElementById('username').value.trim();
+      const name = document.getElementById('username').value;
       if (!name) {
         alert("Masukkan nama terlebih dahulu!");
         return;
@@ -230,13 +292,9 @@
     }
 
     function checkAnswer(btn, correct) {
-      const q = questions[currentQuestion];
-      const userAnswer = btn.textContent || "Waktu habis";
-
       const buttons = document.querySelectorAll("#options button");
       buttons.forEach(b => b.disabled = true);
-
-      if (userAnswer === correct) {
+      if (btn.textContent === correct) {
         btn.classList.add("correct");
         score++;
       } else {
@@ -245,16 +303,40 @@
           if (b.textContent === correct) b.classList.add("correct");
         });
       }
+  const userAnswers = [];
+  function checkAnswer(btn, correct) {
+  const q = questions[currentQuestion];
+  const userAnswer = btn.textContent || "Waktu habis";
 
-      userAnswers.push({
-        question: q.question,
-        answer: userAnswer,
-        correct: userAnswer === correct
-      });
+  // Simpan jawaban
+  userAnswers.push({
+    question: q.question,
+    answer: userAnswer,
+    correct: userAnswer === correct
+  });
 
-      document.getElementById("score").textContent = `Skor: ${score}`;
+  // Di akhir kuis panggil:
+  if (currentQuestion >= questions.length) {
+    saveToFirebase();
+  }
+}
+      function saveToFirebase() {
+  const name = document.getElementById("username").value;
+  const payload = {
+    name,
+    score,
+    answers: userAnswers,
+    timestamp: new Date().toISOString()
+  };
+
+  const db = firebase.database(); // atau firebase.firestore() jika pakai Firestore
+  db.ref("responses").push(payload).then(() => {
+    showHighscore();
+  });
+}
+
+      document.getElementById("score").textContent = Skor: ${score};
       clearInterval(timer);
-
       setTimeout(() => {
         currentQuestion++;
         if (currentQuestion < questions.length) {
@@ -262,17 +344,17 @@
           showQuestion();
           startTimer();
         } else {
-          saveToFirebase();
+          showHighscore();
         }
       }, 1200);
     }
 
     function startTimer() {
-      document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
+      document.getElementById("timer").textContent = Waktu: ${timeLeft}s;
       timer = setInterval(() => {
         timeLeft--;
-        document.getElementById("timer").textContent = `Waktu: ${timeLeft}s`;
-        document.getElementById("progress-bar").style.width = `${(timeLeft / 15) * 100}%`;
+        document.getElementById("timer").textContent = Waktu: ${timeLeft}s;
+        document.getElementById("progress-bar").style.width = ${(timeLeft / 15) * 100}%;
         if (timeLeft <= 0) {
           clearInterval(timer);
           checkAnswer({ textContent: "" }, questions[currentQuestion].answer);
@@ -280,28 +362,11 @@
       }, 1000);
     }
 
-    function saveToFirebase() {
-      const name = document.getElementById("username").value.trim();
-      const payload = {
-        name,
-        score,
-        answers: userAnswers,
-        timestamp: new Date().toISOString()
-      };
-
-      firebase.database().ref("responses").push(payload)
-        .then(() => showHighscore())
-        .catch(err => {
-          console.error("Error saving to Firebase:", err);
-          alert("Gagal menyimpan data.");
-        });
-    }
-
     function showHighscore() {
       document.getElementById("quiz-container").style.display = 'none';
       document.getElementById("highscore").style.display = 'block';
-      const username = document.getElementById("username").value.trim();
-      const entry = `${username} - Skor: ${score}`;
+      const username = document.getElementById("username").value;
+      const entry = ${username} - Skor: ${score};
       const list = document.getElementById("highscore-list");
       const item = document.createElement("li");
       item.textContent = entry;
